@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  
+  --color-warm-cream: #F2EBDD;
+  --color-dark-chocolate: #2E1E14;
+  --color-dark-chocolate-light: #3D2A1C;
+  --color-bronze-gold: #C8A467;
+  --color-bronze-gold-dark: #B08A4E;
+  --color-near-black-brown: #241811;
+  --color-warm-cream-light: #F5EFE3;
+  --color-emerald-deep: #0B3C33;
+  --color-emerald-deep-dark: #06221D;
+}
+
+/* Custom styles like the arched frames, scroll-behavior, animations */
+html {
+  scroll-behavior: smooth;
+  background-color: #F2EBDD; /* warm-cream */
+  color: #241811; /* near-black-brown */
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F2EBDD;
+}
+::-webkit-scrollbar-thumb {
+  background: #B08A4E;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C8A467;
+}
+
+.arch-frame {
+  border-radius: 200px 200px 16px 16px;
+  overflow: hidden;
+}
+
+/* Smooth custom styles for animations and layout */
+.font-serif-italics {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Kuberaa Properties",
+  "description": "A high-end editorial layout plots showcase for Kuberaa Properties. Replicates a luxury heritage watch brand aesthetic with beautiful layouts, classic serif typography, and premium DTCP & TNRERA approved commercial, residential, and investment plots.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
