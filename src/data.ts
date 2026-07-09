@@ -1,12 +1,17 @@
 import { Listing, Testimonial, StatItem, TrustItem, GalleryItem } from "./types";
+import heroVilla from "./assets/images/hero_villa_1783614707797.jpg";
+import interiorArch from "./assets/images/interior_arch_1783614721746.jpg";
+import lifestyleTeal from "./assets/images/lifestyle_teal_1783614736112.jpg";
+import listingBedroom from "./assets/images/listing_bedroom_1783614753869.png";
+import rnpw from "./assets/images/RNPWjdmGT8U-SD.jpg";
+import screenshot from "./assets/images/Screenshot 2026-07-09 223718.png";
 
-// Bespoke paths of high-quality generated assets
-export const HERO_IMAGE = "/src/assets/images/hero_villa_1783614707797.jpg";
-export const INTERIOR_ARCH_IMAGE = "/src/assets/images/interior_arch_1783614721746.jpg";
-export const LIFESTYLE_TEAL_IMAGE = "/src/assets/images/lifestyle_teal_1783614736112.jpg";
-export const LISTING_BEDROOM_IMAGE = "/src/assets/images/listing_bedroom_1783614753869.png";
-export const RNPW_IMAGE = "/src/assets/images/RNPWjdmGT8U-SD.jpg";
-export const SCREENSHOT_IMAGE = "/src/assets/images/Screenshot 2026-07-09 223718.png";
+export const HERO_IMAGE = heroVilla;
+export const INTERIOR_ARCH_IMAGE = interiorArch;
+export const LIFESTYLE_TEAL_IMAGE = lifestyleTeal;
+export const LISTING_BEDROOM_IMAGE = listingBedroom;
+export const RNPW_IMAGE = rnpw;
+export const SCREENSHOT_IMAGE = screenshot;
 
 export const STATS_DATA: StatItem[] = [
   {
