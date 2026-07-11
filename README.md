@@ -1,20 +1,31 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Kuberaa Properties
 
-# Run and deploy your AI Studio app
+A high-end editorial showcase website for **Kuberaa Properties**, a premier developer of high-yielding, securely approved layout plots in Coimbatore and Chennai. 
 
-This contains everything you need to run your app locally.
+The site utilizes a premium aesthetic inspired by heritage watch brand presentations—featuring classic serif typography, clean layouts, and rich design elements.
 
-View your app in AI Studio: https://ai.studio/apps/9ee9de4f-5389-42a5-96b8-31eb9b08c7a6
+## Features
+- **Multipage Navigation**: Easy hash-based routing between Home, About Us, Available Estates, Testimonials, and Contact Us pages.
+- **Search & Filters**: Fully interactive search bar and category filters (Residential, Commercial, Investment) on the Estates page.
+- **Interactive Review Submission**: Simulate leaving reviews on the Testimonials page with star ratings and user feedback.
+- **Embedded Inquiry & Booking**: Directly contact our offices or concierge service to arrange site visits.
+- **Strict Compliance Demarcation**: Complete DTCP & TNRERA registration detail displays.
 
-## Run Locally
+## Local Development
 
-**Prerequisites:**  Node.js
+### Prerequisites
+- **Node.js** (v18+)
 
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### Steps
+1. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+2. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
+3. **Build for production**:
+   ```bash
+   npm run build
+   ```

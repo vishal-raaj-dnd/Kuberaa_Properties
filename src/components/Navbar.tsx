@@ -21,13 +21,30 @@ export default function Navbar({ onBookVisit }: NavbarProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const [currentHash, setCurrentHash] = useState(window.location.hash || "#/");
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      setCurrentHash(window.location.hash || "#/");
+    };
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
+
   const navLinks = [
-    { label: "HERITAGE", href: "#heritage" },
-    { label: "CRAFTSMANSHIP", href: "#craftsmanship" },
-    { label: "TRUST", href: "#trust" },
-    { label: "AVAILABLE ESTATES", href: "#estates" },
-    { label: "TESTIMONIALS", href: "#testimonials" },
+    { label: "HOME", href: "#/" },
+    { label: "ABOUT US", href: "#/about" },
+    { label: "AVAILABLE ESTATES", href: "#/estates" },
+    { label: "TESTIMONIALS", href: "#/testimonials" },
+    { label: "CONTACT US", href: "#/contact" },
   ];
+
+  const isActive = (href: string) => {
+    if (href === "#/") {
+      return currentHash === "#/" || currentHash === "" || currentHash === "#/home";
+    }
+    return currentHash.startsWith(href);
+  };
 
   return (
     <nav
@@ -52,7 +69,11 @@ export default function Navbar({ onBookVisit }: NavbarProps) {
               <a
                 key={link.label}
                 href={link.href}
-                className="text-[#F5EFE3]/80 hover:text-[#C8A467] transition-all duration-200 text-[10px] tracking-[0.2em] font-sans font-medium hover:translate-y-[-1px]"
+                className={`transition-all duration-200 text-[10px] tracking-[0.2em] font-sans font-medium hover:translate-y-[-1px] ${
+                  isActive(link.href)
+                    ? "text-[#C8A467] border-b border-[#C8A467]/40 pb-1"
+                    : "text-[#F5EFE3]/80 hover:text-[#C8A467]"
+                }`}
               >
                 {link.label}
               </a>
@@ -94,7 +115,11 @@ export default function Navbar({ onBookVisit }: NavbarProps) {
                 key={link.label}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className="text-[#F5EFE3]/90 hover:text-[#C8A467] transition-colors text-xs tracking-[0.25em] font-sans font-medium py-2 border-b border-[#F5EFE3]/5"
+                className={`transition-colors text-xs tracking-[0.25em] font-sans font-medium py-2 border-b border-[#F5EFE3]/5 ${
+                  isActive(link.href)
+                    ? "text-[#C8A467]"
+                    : "text-[#F5EFE3]/90 hover:text-[#C8A467]"
+                }`}
               >
                 {link.label}
               </a>
