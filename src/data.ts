@@ -82,7 +82,7 @@ export const GALLERY_DATA: GalleryItem[] = [
 export const TRUST_DATA: TrustItem[] = [
   {
     id: "trust-1",
-    title: "DTCP SANCITONED",
+    title: "DTCP SANCTIONED",
     description: "Strict compliance with State Town and Country Planning authorities ensuring robust layout standards, broad roads, and parks.",
     iconName: "ShieldCheck"
   },

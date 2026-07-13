@@ -86,7 +86,6 @@ export default function Footer() {
                   <span>+91 94423 25093</span>
                   <span>+91 97866 28200</span>
                 </p>
-                <p className="text-[10px] text-[#F5EFE3]/50">contact@kuberaaproperties.com</p>
               </div>
             </div>
           </div>

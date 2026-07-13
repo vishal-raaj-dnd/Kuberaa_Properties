@@ -9,6 +9,7 @@ The site utilizes a premium aesthetic inspired by heritage watch brand presentat
 - **Search & Filters**: Fully interactive search bar and category filters (Residential, Commercial, Investment) on the Estates page.
 - **Interactive Review Submission**: Simulate leaving reviews on the Testimonials page with star ratings and user feedback.
 - **Embedded Inquiry & Booking**: Directly contact our offices or concierge service to arrange site visits.
+- **WhatsApp Booking Redirection**: Seamless redirection to WhatsApp with a prefilled, formatted message draft containing the client's name, email, phone number, preferred layout, date, and special requests.
 - **Strict Compliance Demarcation**: Complete DTCP & TNRERA registration detail displays.
 
 ## Local Development

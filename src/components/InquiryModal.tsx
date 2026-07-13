@@ -43,6 +43,22 @@ export default function InquiryModal({ isOpen, onClose, preselectedProperty }: I
     } catch (e) {
       console.error("Local storage persistence failed", e);
     }
+
+    // Redirect to WhatsApp with message draft
+    const phoneNumber = "919442325093";
+    const message = `Hello Kuberaa Properties,
+
+I would like to book a site layout tour. Here are my details:
+- Name: ${formData.name}
+- Email: ${formData.email}
+- Phone: ${formData.phone}
+- Preferred Layout: ${formData.property}
+- Preferred Date: ${formData.date}
+${formData.notes ? `- Special Requests: ${formData.notes}` : ""}`;
+
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    window.open(whatsappUrl, "_blank");
   };
 
   const handleReset = () => {
