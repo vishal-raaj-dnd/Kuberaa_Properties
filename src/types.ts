@@ -43,3 +43,68 @@ export interface BrandPartner {
   name: string;
   logoUrl?: string; // If using SVGs, we can draw them directly
 }
+
+// ── Auth & Dashboard Types ─────────────────────────────────────────────────────
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  passwordHash: string; // plain text for demo; never do this in production
+  phone: string;
+  role: "client" | "admin";
+  avatarInitials: string;
+  joinedAt: string;
+}
+
+export type DocStatus = "done" | "in-progress" | "pending";
+
+export interface DocumentStep {
+  id: string;
+  title: string;
+  subtitle: string;
+  date: string;       // ISO date or empty string
+  status: DocStatus;
+  badge?: string;     // e.g., "DTCP Filed"
+}
+
+export interface SiteVisit {
+  id: string;
+  property: string;
+  location: string;
+  date: string;
+  time: string;
+  consultant: string;
+  status: "upcoming" | "completed" | "cancelled";
+}
+
+export interface PaymentMilestone {
+  id: string;
+  label: string;
+  amount: string;
+  date: string;
+  mode: string;
+  status: "paid" | "due" | "overdue";
+}
+
+export interface OwnedProperty {
+  id: string;
+  name: string;
+  plotNumber: string;
+  area: string;
+  location: string;
+  tag: "Residential Plot" | "Commercial Plot" | "Investment Plot";
+  dtcpRef: string;
+  tneraRef: string;
+  purchaseDate: string;
+  purchasePrice: string;
+  image: string;
+}
+
+export interface DashboardData {
+  user: User;
+  documents: DocumentStep[];
+  visits: SiteVisit[];
+  payments: PaymentMilestone[];
+  properties: OwnedProperty[];
+}

@@ -11,16 +11,21 @@ import ClosingCTA from "./components/ClosingCTA";
 import Footer from "./components/Footer";
 import InquiryModal from "./components/InquiryModal";
 
-// New page imports
+// Page imports
 import AboutPage from "./components/AboutPage";
 import EstatesPage from "./components/EstatesPage";
 import TestimonialsPage from "./components/TestimonialsPage";
 import ContactPage from "./components/ContactPage";
 
+// Auth & Dashboard
+import SignInPage from "./components/SignInPage";
+import ClientDashboard from "./components/ClientDashboard";
+import { AuthProvider } from "./context/AuthContext";
+
 export default function App() {
-  const [isInquiryOpen, setIsInquiryOpen] = useState(false);
+  const [isInquiryOpen, setIsInquiryOpen]     = useState(false);
   const [selectedProperty, setSelectedProperty] = useState<string | undefined>(undefined);
-  const [currentHash, setCurrentHash] = useState(window.location.hash || "#/");
+  const [currentHash, setCurrentHash]           = useState(window.location.hash || "#/");
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -41,6 +46,15 @@ export default function App() {
     setSelectedProperty(undefined);
   };
 
+  // Dashboard page — rendered without the standard Navbar/Footer chrome
+  if (currentHash === "#/dashboard") {
+    return (
+      <AuthProvider>
+        <ClientDashboard />
+      </AuthProvider>
+    );
+  }
+
   const renderPageContent = () => {
     switch (currentHash) {
       case "#/about":
@@ -51,34 +65,36 @@ export default function App() {
         return <TestimonialsPage />;
       case "#/contact":
         return <ContactPage />;
+      case "#/signin":
+        return <SignInPage />;
       case "#/":
       case "":
       case "#/home":
       default:
         return (
           <>
-            {/* 2. Hero Section */}
+            {/* Hero Section */}
             <Hero onBookVisit={() => handleOpenInquiry()} />
 
-            {/* 3. Stats Strip */}
+            {/* Stats Strip */}
             <Stats />
 
-            {/* 4. Asymmetric Bento Photo Gallery */}
+            {/* Asymmetric Bento Photo Gallery */}
             <BentoGallery />
 
-            {/* 5. Two-Column Trust Section (Cream background, Arched center frame) */}
+            {/* Two-Column Trust Section */}
             <TrustSection />
 
-            {/* 6. "Available This Week" Listings Section (Cream, Arched Pedestals, Wishlist) */}
+            {/* "Available This Week" Listings Section */}
             <Listings onBookVisit={handleOpenInquiry} />
 
-            {/* 7. Full-bleed dramatic Emerald/Teal Lifestyle Section (Carousel & Floating Card) */}
+            {/* Full-bleed dramatic Emerald/Teal Lifestyle Section */}
             <TealLifestyle />
 
-            {/* 8. Testimonials Section (Pull-quotes, Rating, Author Profile) */}
+            {/* Testimonials Section */}
             <Testimonials />
 
-            {/* 9. Closing CTA Banner (Reused Gold Diamond Divider) */}
+            {/* Closing CTA Banner */}
             <ClosingCTA onBookVisit={() => handleOpenInquiry()} />
           </>
         );
@@ -86,24 +102,27 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#F2EBDD] font-sans antialiased text-[#241811] selection:bg-[#B08A4E]/30" id="brochure-root">
-      
-      {/* 1. Sticky Navigation Bar */}
-      <Navbar onBookVisit={() => handleOpenInquiry()} />
+    <AuthProvider>
+      <div
+        className="relative min-h-screen bg-[#F2EBDD] font-sans antialiased text-[#241811] selection:bg-[#B08A4E]/30"
+        id="brochure-root"
+      >
+        {/* Sticky Navigation Bar */}
+        <Navbar onBookVisit={() => handleOpenInquiry()} />
 
-      {/* Dynamic Content based on Hash Routing */}
-      {renderPageContent()}
+        {/* Dynamic Content based on Hash Routing */}
+        {renderPageContent()}
 
-      {/* 10. Footer (4 Columns, Copyright, RERA Disclaimer, Regulatory Compliance) */}
-      <Footer />
+        {/* Footer — hide on signin page */}
+        {currentHash !== "#/signin" && <Footer />}
 
-      {/* 11. Interactive Concierge Booking Modal */}
-      <InquiryModal
-        isOpen={isInquiryOpen}
-        onClose={handleCloseInquiry}
-        preselectedProperty={selectedProperty}
-      />
-
-    </div>
+        {/* Interactive Concierge Booking Modal */}
+        <InquiryModal
+          isOpen={isInquiryOpen}
+          onClose={handleCloseInquiry}
+          preselectedProperty={selectedProperty}
+        />
+      </div>
+    </AuthProvider>
   );
 }

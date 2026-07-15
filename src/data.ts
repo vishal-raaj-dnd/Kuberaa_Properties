@@ -1,4 +1,4 @@
-import { Listing, Testimonial, StatItem, TrustItem, GalleryItem } from "./types";
+import { Listing, Testimonial, StatItem, TrustItem, GalleryItem, User, DashboardData, DocumentStep, SiteVisit, PaymentMilestone, OwnedProperty } from "./types";
 import heroVilla from "./assets/images/hero_villa_1783614707797.jpg";
 import interiorArch from "./assets/images/interior_arch_1783614721746.jpg";
 import lifestyleTeal from "./assets/images/lifestyle_teal_1783614736112.jpg";
@@ -171,3 +171,180 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     role: "Senior Paediatrician, KG Hospital"
   }
 ];
+
+// ── Mock User Accounts ─────────────────────────────────────────────────────────
+
+export const MOCK_USERS: User[] = [
+  {
+    id: "user-001",
+    name: "Rajesh Karthikeyan",
+    email: "client@kuberaa.com",
+    passwordHash: "Kuberaa@2024",
+    phone: "+91 98765 43210",
+    role: "client",
+    avatarInitials: "RK",
+    joinedAt: "2024-03-15"
+  },
+  {
+    id: "user-002",
+    name: "Admin Kuberaa",
+    email: "admin@kuberaa.com",
+    passwordHash: "Admin@2024",
+    phone: "+91 94423 25093",
+    role: "admin",
+    avatarInitials: "AK",
+    joinedAt: "2023-01-01"
+  }
+];
+
+// ── Mock Dashboard Data ────────────────────────────────────────────────────────
+
+const CLIENT_DOCUMENTS: DocumentStep[] = [
+  {
+    id: "doc-1",
+    title: "Agreement of Sale",
+    subtitle: "Signed & Notarized — Original held at Kuberaa Registry",
+    date: "2024-04-02",
+    status: "done",
+    badge: "NOTARIZED"
+  },
+  {
+    id: "doc-2",
+    title: "Token Advance Payment",
+    subtitle: "₹2,25,000 received — Receipt No. KP/2024/TKN/4421",
+    date: "2024-04-05",
+    status: "done",
+    badge: "PAID"
+  },
+  {
+    id: "doc-3",
+    title: "Legal Title Verification",
+    subtitle: "Encumbrance Certificate & Revenue Records — Under Examination",
+    date: "2024-04-20",
+    status: "done",
+    badge: "DTCP FILED"
+  },
+  {
+    id: "doc-4",
+    title: "Bank Loan Sanction (HDFC)",
+    subtitle: "Loan file submitted — Awaiting final sanction letter",
+    date: "2024-05-10",
+    status: "in-progress",
+    badge: "IN REVIEW"
+  },
+  {
+    id: "doc-5",
+    title: "Sub-Registrar Office Registration",
+    subtitle: "Scheduled after loan sanction confirmation",
+    date: "",
+    status: "pending"
+  },
+  {
+    id: "doc-6",
+    title: "Possession & Handover",
+    subtitle: "Plot demarcation, peg marking, and handover certificate",
+    date: "",
+    status: "pending"
+  }
+];
+
+const CLIENT_VISITS: SiteVisit[] = [
+  {
+    id: "visit-1",
+    property: "The Emerald Crest Plots",
+    location: "Saravanampatti, Coimbatore",
+    date: "2024-03-20",
+    time: "10:00 AM",
+    consultant: "Mr. Suresh Annamalai",
+    status: "completed"
+  },
+  {
+    id: "visit-2",
+    property: "The Emerald Crest Plots",
+    location: "Saravanampatti, Coimbatore",
+    date: "2024-04-01",
+    time: "11:30 AM",
+    consultant: "Mr. Suresh Annamalai",
+    status: "completed"
+  },
+  {
+    id: "visit-3",
+    property: "The Emerald Crest Plots — Plot No. 47",
+    location: "Saravanampatti, Coimbatore",
+    date: "2024-05-25",
+    time: "10:00 AM",
+    consultant: "Mr. Dinesh Kumar",
+    status: "upcoming"
+  }
+];
+
+const CLIENT_PAYMENTS: PaymentMilestone[] = [
+  {
+    id: "pay-1",
+    label: "Token Advance",
+    amount: "₹ 2,25,000",
+    date: "05 Apr 2024",
+    mode: "NEFT — HDFC Bank",
+    status: "paid"
+  },
+  {
+    id: "pay-2",
+    label: "Agreement Value (25%)",
+    amount: "₹ 11,25,000",
+    date: "20 Apr 2024",
+    mode: "Cheque — SBI",
+    status: "paid"
+  },
+  {
+    id: "pay-3",
+    label: "Bank Loan Disbursement (60%)",
+    amount: "₹ 27,00,000",
+    date: "Pending",
+    mode: "HDFC Home Loan",
+    status: "due"
+  },
+  {
+    id: "pay-4",
+    label: "Registration Charges & Stamp Duty",
+    amount: "₹ 2,50,000",
+    date: "Pending",
+    mode: "DD / Cash",
+    status: "due"
+  },
+  {
+    id: "pay-5",
+    label: "Final Balance (15%)",
+    amount: "₹ 2,00,000",
+    date: "Pending",
+    mode: "TBD",
+    status: "due"
+  }
+];
+
+const CLIENT_PROPERTIES: OwnedProperty[] = [
+  {
+    id: "prop-1",
+    name: "The Emerald Crest Plots",
+    plotNumber: "Plot No. 47 — Block B",
+    area: "1,800 sq.ft.",
+    location: "Saravanampatti, Coimbatore – 641035",
+    tag: "Residential Plot",
+    dtcpRef: "DTCP/CBE/2023/LP/0047",
+    tneraRef: "TN/01/Building/0234/2023",
+    purchaseDate: "April 2024",
+    purchasePrice: "₹ 45,00,000",
+    image: LISTING_BEDROOM_IMAGE
+  }
+];
+
+export function getMockDashboardData(userId: string): DashboardData | null {
+  const user = MOCK_USERS.find(u => u.id === userId);
+  if (!user) return null;
+  return {
+    user,
+    documents: CLIENT_DOCUMENTS,
+    visits: CLIENT_VISITS,
+    payments: CLIENT_PAYMENTS,
+    properties: CLIENT_PROPERTIES
+  };
+}
