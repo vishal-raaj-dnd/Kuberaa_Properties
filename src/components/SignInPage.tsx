@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { Mail, Lock, User, Phone, Eye, EyeOff, ArrowRight, AlertCircle, Loader2 } from "lucide-react";
+import { Mail, Lock, User, Phone, Eye, EyeOff, ArrowRight, AlertCircle, Loader2, Shield, Users } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 
 type Mode = "signin" | "signup";
+type LoginRole = "customer" | "admin";
 
 export default function SignInPage() {
   const { login, register } = useAuth();
   const [mode, setMode] = useState<Mode>("signin");
+  const [loginRole, setLoginRole] = useState<LoginRole>("customer");
 
   // Sign-in state
   const [siEmail, setSiEmail] = useState("");
@@ -32,7 +34,12 @@ export default function SignInPage() {
     const result = await login(siEmail.trim(), siPassword);
     setSiLoading(false);
     if (result.success) {
-      window.location.hash = "#/dashboard";
+      // Route based on actual role from DB
+      if (result.role === "admin") {
+        window.location.hash = "#/admin";
+      } else {
+        window.location.hash = "#/dashboard";
+      }
     } else {
       setSiError(result.error || "Login failed.");
     }
@@ -59,11 +66,6 @@ export default function SignInPage() {
     }
   };
 
-  const fillDemo = () => {
-    setSiEmail("client@kuberaa.com");
-    setSiPassword("Kuberaa@2024");
-  };
-
   return (
     <div className="min-h-screen bg-[#F2EBDD] pt-20 flex items-center justify-center px-4 py-12" id="signin-page">
       <div className="w-full max-w-md">
@@ -82,35 +84,93 @@ export default function SignInPage() {
             </h1>
             <p className="font-sans text-[11px] text-[#F5EFE3]/50 tracking-wider">
               {mode === "signin"
-                ? "Sign in to access your property dashboard"
+                ? "Sign in to access your portal"
                 : "Register to track your property journey"}
             </p>
 
-            {/* Mode Toggle */}
-            <div className="flex rounded-xl border border-[#C8A467]/20 mt-6 overflow-hidden">
-              <button
-                onClick={() => { setMode("signin"); setSiError(""); }}
-                className={`flex-1 py-2.5 text-[10px] tracking-widest font-sans font-bold uppercase transition-all duration-300 cursor-pointer ${
-                  mode === "signin"
-                    ? "bg-[#B08A4E] text-[#2E1E14]"
-                    : "text-[#F5EFE3]/50 hover:text-[#F5EFE3] bg-transparent"
-                }`}
-                id="signin-tab"
-              >
-                Sign In
-              </button>
-              <button
-                onClick={() => { setMode("signup"); setSuError(""); }}
-                className={`flex-1 py-2.5 text-[10px] tracking-widest font-sans font-bold uppercase transition-all duration-300 cursor-pointer ${
-                  mode === "signup"
-                    ? "bg-[#B08A4E] text-[#2E1E14]"
-                    : "text-[#F5EFE3]/50 hover:text-[#F5EFE3] bg-transparent"
-                }`}
-                id="signup-tab"
-              >
-                Sign Up
-              </button>
-            </div>
+            {/* ── Role Selector (only on signin) ── */}
+            {mode === "signin" && (
+              <div className="mt-6 p-1 bg-[#1a0f0a]/60 rounded-2xl border border-[#C8A467]/15">
+                <div className="grid grid-cols-2 gap-1">
+                  <button
+                    type="button"
+                    onClick={() => { setLoginRole("customer"); setSiError(""); }}
+                    className={`flex items-center justify-center gap-2 py-3 px-3 rounded-xl text-[10px] font-bold tracking-wider uppercase transition-all duration-300 cursor-pointer font-sans ${
+                      loginRole === "customer"
+                        ? "bg-[#B08A4E] text-[#2E1E14] shadow-lg shadow-[#B08A4E]/30"
+                        : "text-[#F5EFE3]/40 hover:text-[#F5EFE3]/70"
+                    }`}
+                    id="role-customer"
+                  >
+                    <Users className="w-3.5 h-3.5" />
+                    Customer
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setLoginRole("admin"); setSiError(""); }}
+                    className={`flex items-center justify-center gap-2 py-3 px-3 rounded-xl text-[10px] font-bold tracking-wider uppercase transition-all duration-300 cursor-pointer font-sans ${
+                      loginRole === "admin"
+                        ? "bg-[#B08A4E] text-[#2E1E14] shadow-lg shadow-[#B08A4E]/30"
+                        : "text-[#F5EFE3]/40 hover:text-[#F5EFE3]/70"
+                    }`}
+                    id="role-admin"
+                  >
+                    <Shield className="w-3.5 h-3.5" />
+                    Admin / Owner
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* ── Mode Toggle (Sign In / Sign Up) ── */}
+            {mode === "signin" && loginRole === "customer" && (
+              <div className="flex rounded-xl border border-[#C8A467]/20 mt-5 overflow-hidden">
+                <button
+                  onClick={() => { setMode("signin"); setSiError(""); }}
+                  className="flex-1 py-2.5 text-[10px] tracking-widest font-sans font-bold uppercase bg-[#B08A4E] text-[#2E1E14] cursor-pointer"
+                  id="signin-tab"
+                >
+                  Sign In
+                </button>
+                <button
+                  onClick={() => { setMode("signup"); setSuError(""); }}
+                  className="flex-1 py-2.5 text-[10px] tracking-widest font-sans font-bold uppercase text-[#F5EFE3]/50 hover:text-[#F5EFE3] bg-transparent transition-all duration-300 cursor-pointer"
+                  id="signup-tab"
+                >
+                  Sign Up
+                </button>
+              </div>
+            )}
+
+            {/* Admin badge */}
+            {mode === "signin" && loginRole === "admin" && (
+              <div className="mt-5 flex items-center justify-center gap-2 bg-[#C8A467]/10 border border-[#C8A467]/30 rounded-xl py-2.5 px-4">
+                <Shield className="w-3.5 h-3.5 text-[#C8A467]" />
+                <span className="font-sans text-[10px] font-bold tracking-wider text-[#C8A467] uppercase">
+                  Kuberaa Admin Portal — Owner Access
+                </span>
+              </div>
+            )}
+
+            {/* Mode Toggle when in signup */}
+            {mode === "signup" && (
+              <div className="flex rounded-xl border border-[#C8A467]/20 mt-5 overflow-hidden">
+                <button
+                  onClick={() => { setMode("signin"); setSiError(""); }}
+                  className="flex-1 py-2.5 text-[10px] tracking-widest font-sans font-bold uppercase text-[#F5EFE3]/50 hover:text-[#F5EFE3] bg-transparent transition-all duration-300 cursor-pointer"
+                  id="signin-tab-from-signup"
+                >
+                  Sign In
+                </button>
+                <button
+                  onClick={() => { setMode("signup"); setSuError(""); }}
+                  className="flex-1 py-2.5 text-[10px] tracking-widest font-sans font-bold uppercase bg-[#B08A4E] text-[#2E1E14] cursor-pointer"
+                  id="signup-tab-active"
+                >
+                  Sign Up
+                </button>
+              </div>
+            )}
           </div>
 
           <div className="px-8 py-8">
@@ -119,25 +179,17 @@ export default function SignInPage() {
             {mode === "signin" && (
               <form onSubmit={handleSignIn} className="space-y-5" id="signin-form">
 
-                {/* Demo credentials hint */}
-                <div
-                  onClick={fillDemo}
-                  className="flex items-start gap-3 bg-[#C8A467]/10 border border-[#C8A467]/20 rounded-xl p-3.5 cursor-pointer hover:bg-[#C8A467]/15 transition-colors group"
-                  title="Click to auto-fill"
-                  id="demo-credentials-hint"
-                >
-                  <div className="w-5 h-5 rounded-full bg-[#C8A467]/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-[#C8A467] text-[9px] font-bold">✦</span>
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-sans font-bold text-[#C8A467] tracking-wider uppercase">Demo Credentials — Click to Fill</p>
-                    <p className="text-[10px] text-[#F5EFE3]/50 font-sans mt-0.5">
-                      Email: <span className="text-[#F5EFE3]/80">client@kuberaa.com</span>
-                    </p>
-                    <p className="text-[10px] text-[#F5EFE3]/50 font-sans">
-                      Password: <span className="text-[#F5EFE3]/80">Kuberaa@2024</span>
-                    </p>
-                  </div>
+                {/* Context-aware hint */}
+                <div className={`rounded-xl p-3.5 border ${
+                  loginRole === "admin"
+                    ? "bg-[#C8A467]/10 border-[#C8A467]/25"
+                    : "bg-white/3 border-[#F5EFE3]/8"
+                }`}>
+                  <p className="text-[10px] font-sans text-[#F5EFE3]/50 leading-relaxed">
+                    {loginRole === "admin"
+                      ? "🔒 Admin access grants full control over all customer records. Use your registered admin credentials."
+                      : "Enter your registered email and password to access your property dashboard."}
+                  </p>
                 </div>
 
                 {/* Email */}
@@ -197,11 +249,17 @@ export default function SignInPage() {
                 <button
                   type="submit"
                   disabled={siLoading}
-                  className="w-full py-4 bg-[#B08A4E] hover:bg-[#C8A467] disabled:opacity-60 text-[#2E1E14] font-bold text-[10px] tracking-widest uppercase rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer font-sans mt-2"
+                  className={`w-full py-4 disabled:opacity-60 text-[#2E1E14] font-bold text-[10px] tracking-widest uppercase rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer font-sans mt-2 ${
+                    loginRole === "admin"
+                      ? "bg-gradient-to-r from-[#B08A4E] to-[#C8A467] hover:from-[#C8A467] hover:to-[#D4B07A]"
+                      : "bg-[#B08A4E] hover:bg-[#C8A467]"
+                  }`}
                   id="signin-submit"
                 >
                   {siLoading ? (
                     <><Loader2 className="w-4 h-4 animate-spin" /> Authenticating…</>
+                  ) : loginRole === "admin" ? (
+                    <><Shield className="w-3.5 h-3.5" /><span>Access Admin Panel</span><ArrowRight className="w-3.5 h-3.5" /></>
                   ) : (
                     <><span>Sign In to Dashboard</span><ArrowRight className="w-3.5 h-3.5" /></>
                   )}

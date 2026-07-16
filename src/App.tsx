@@ -20,6 +20,7 @@ import ContactPage from "./components/ContactPage";
 // Auth & Dashboard
 import SignInPage from "./components/SignInPage";
 import ClientDashboard from "./components/ClientDashboard";
+import AdminDashboard from "./components/AdminDashboard";
 import { AuthProvider } from "./context/AuthContext";
 
 export default function App() {
@@ -46,11 +47,19 @@ export default function App() {
     setSelectedProperty(undefined);
   };
 
-  // Dashboard page — rendered without the standard Navbar/Footer chrome
+  // Dashboard / Admin pages — rendered without the standard Navbar/Footer chrome
   if (currentHash === "#/dashboard") {
     return (
       <AuthProvider>
         <ClientDashboard />
+      </AuthProvider>
+    );
+  }
+
+  if (currentHash === "#/admin") {
+    return (
+      <AuthProvider>
+        <AdminDashboard />
       </AuthProvider>
     );
   }
